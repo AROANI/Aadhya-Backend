@@ -1,0 +1,31 @@
+# Node dependencies and build outputs
+node_modules
+dist
+coverage
+
+# Environment files
+.env
+.env.*.local
+
+# Logs and debug
+*.log
+.pnpm-debug.log*
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Cache directories
+.cache
+.parcel-cache
+.nyc_output
+
+# Package manager lock files (optional if you want to avoid formatting)
+package-lock.json
+pnpm-lock.yaml
+
+# IDE / editor files
+.vscode
+*.swp
+
+# Migration files
+src/migrations/**
