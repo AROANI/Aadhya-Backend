@@ -1,106 +1,43 @@
-# Aadhya Server (NGO Backend)
+# OceanOS / Aadhya Backend Server
 
-This is the backend service for the Aadhya NGO project, built using [NestJS](https://nestjs.com/) and Docker.
+This is the complete backend for the OceanOS/Aadhya project, built from scratch using **NestJS**, **TypeORM**, and **PostgreSQL**.
 
----
-
-## Project Setup
-
-### Local Development
-
-#### 1. Install dependencies
-
-```bash
-pnpm install
-```
-
-#### 2. Run the app locally
-
-```bash
-pnpm start:dev
-```
-
-The server will be available at: [http://localhost:3001](http://localhost:3001)
+## 🚀 Features Implemented
+- **Child Management:** CRUD APIs to manage student profiles.
+- **Assessment System:** Dynamic JSON-based questionnaire engine (supports PurpleVision, PurpleMind, etc.).
+- **Authentication:** Phone-based login system with OTP verification.
+- **Curriculum:** Management modules for Subjects and Activities.
+- **Organization:** NGO and Role-based user management.
 
 ---
 
-### Run with Docker
+## 🛠️ Setup Instructions (Fresh Install)
 
-#### 1. Build and start the container
+Follow these steps to run the project on a new machine.
 
+### Prerequisites
+- **Docker Desktop** (Must be installed and running)
+- **Git**
+
+### Step 1: Clone the Repository
+Open your terminal and run:
 ```bash
-docker compose up --build
-```
+git clone [https://github.com/AROANI/Aadhya-Backend.git](https://github.com/AROANI/Aadhya-Backend.git)
+cd Aadhya-Backend
 
-Then visit: [http://localhost:3001](http://localhost:3001)
+### Step 2: Configure Environment
 
-#### 2. Stop the container
-```bash
-docker compose down
-```
+Create a new file named `.env` in the root folder and paste the following configuration:
 
+```env
+# PostgreSQL Database Settings
+POSTGRES_USER=aadhya
+POSTGRES_PASSWORD=aadhya_password
+POSTGRES_DB=aadhya
 
----
-
-## Health Check
-
-A simple endpoint is available to verify that the server is running:
-
-```
-GET /health
-```
-
-Example usage:
-
-```bash
-curl http://localhost:3000/health
-```
-
-Response:
-```
-ok
-```
-
----
-
-## Project Structure
-
-```
-src/
-  ├── app.controller.ts   # Base and health endpoints
-  ├── app.service.ts      # Application service
-  └── app.module.ts       # Root module
-```
-
----
-
-## Tech Stack
-
-- Node.js / NestJS
-- pnpm (fast dependency management)
-- Docker & Docker Compose
-
-
----
-
-## Note for Linux Users
-
-If you're running the app in Docker and then switching to local development using `pnpm start:dev`, you may run into permission issues like:
-
-```
-EACCES: permission denied, unlink 'dist/...'
-```
-
-This happens because the `dist/` folder is created by Docker as root.
-
-### To fix:
-
-```bash
-sudo rm -rf dist
-```
-
-Then try running the app again:
-
-```bash
-pnpm start:dev
-```
+# NestJS Application Settings
+DATABASE_USERNAME=aadhya
+DATABASE_PASSWORD=aadhya_password
+DATABASE_NAME=aadhya
+DATABASE_HOST=db
+DATABASE_PORT=5432
