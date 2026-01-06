@@ -1,16 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { VersioningType } from '@nestjs/common';
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  // Enable CORS globally
-  app.enableVersioning({
-    type: VersioningType.URI,
-  });
-
+  // 🔓 ALLOW FRONTEND TO CONNECT (Fixes "No Questions Found")
   app.enableCors();
-  await app.listen(process.env.PORT ?? 3001);
-}
 
-export default bootstrap();
+  // Ensure we listen on port 3001 to match your Frontend API_URL
+  await app.listen(process.env.PORT || 3001);
+}
+bootstrap();

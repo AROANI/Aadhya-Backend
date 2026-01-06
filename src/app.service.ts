@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { InjectDataSource } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class AppService {
@@ -16,16 +16,14 @@ export class AppService {
 
   async checkDbConnection() {
     try {
-      if (!this.datasource.isInitialized) {
+      if (this.datasource.isInitialized) {
         return {
           message: 'DB connected successfully',
         };
       }
     } catch (error) {
-      return {
-        error: '❌ Database connection failed',
-        message: error.message,
-      };
+      console.error(error); // <--- logic added: This uses the variable and fixes the error!
+      return { message: 'Error connecting to DB' };
     }
   }
 }

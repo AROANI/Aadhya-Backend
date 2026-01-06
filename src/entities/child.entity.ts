@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'ty
 import { CommonEntity } from './common.entity';
 import { Ngo } from './ngo.entity';
 import { Assessment } from './assessment.entity';
+import { StudentScore } from './student-score.entity';
 
 @Entity()
 export class Child extends CommonEntity {
@@ -19,4 +20,7 @@ export class Child extends CommonEntity {
 
   @Column()
   yob: number;
+
+  @OneToMany(() => StudentScore, (studentScore) => studentScore.child)
+  studentScores: StudentScore[];
 }

@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   api:
     container_name: unirise-aadhya-server
@@ -11,13 +13,13 @@ services:
       - /usr/src/app/node_modules
     command: pnpm run start:dev
     depends_on:
-      - db # ensures DB is up before API tries to connect
+      - db
     environment:
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_HOST: ${DATABASE_HOST}
-      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_USERNAME: aadhya
+      DATABASE_PASSWORD: super_secret_password
+      DATABASE_NAME: aadhya
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
       DATABASE_TYPE: postgres
 
   db:
@@ -25,12 +27,12 @@ services:
     container_name: aadhya-postgres
     restart: unless-stopped
     ports:
-      - "5433:5432"
+      - "5435:5432"
     environment:
-      POSTGRES_USER: ${DATABASE_USERNAME}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-      POSTGRES_DB: ${DATABASE_NAME}
-    volumes:
+      POSTGRES_USER: aadhya
+      POSTGRES_PASSWORD: super_secret_password
+      POSTGRES_DB: aadhya
+    volumes:         # FIXED: moved out of 'environment'
       - pgdata:/var/lib/postgresql/data
 
 volumes:
