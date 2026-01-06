@@ -110,6 +110,20 @@ export class ResponsesService {
     };
   }
 
+  // --- 📊 NEW: Get Scores for the Chart ---
+  async getScores(childId: string) {
+    const scores = await this.scoreRepo.find({
+      where: { child: { id: childId } },
+      relations: ['intelligence'],
+    });
+
+    // Simplify data for the frontend
+    return scores.map(s => ({
+      name: s.intelligence.name,
+      score: s.score
+    }));
+  }
+
   findAll() { return this.responseRepo.find(); }
   findOne(id: string) { return `This action returns a #${id} response`; }
   update(id: string) { return `This action updates a #${id} response`; }

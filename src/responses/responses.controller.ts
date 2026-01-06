@@ -6,16 +6,20 @@ import { CreateResponseDto } from './dto/create-response.dto';
 export class ResponsesController {
   constructor(private readonly responsesService: ResponsesService) {}
 
-  // 1. Get User (THIS WAS MISSING!) 🛑
   @Get('user')
   getStudent() {
     return this.responsesService.getStudent();
   }
 
-  // 2. Get Random Question
   @Get('question')
   getQuestion() {
     return this.responsesService.getQuestion();
+  }
+
+  // 📊 THIS IS THE NEW PART FOR THE CHART
+  @Get('score/:childId')
+  getScores(@Param('childId') childId: string) {
+    return this.responsesService.getScores(childId);
   }
 
   @Post()
