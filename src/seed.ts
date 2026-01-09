@@ -7,6 +7,7 @@ import { Intelligence } from './entities/intelligence.entity';
 import { Question } from './entities/question.entity';
 import { Option } from './entities/option.entity';
 import { Child } from './entities/child.entity';
+import { Assessment } from './entities/assessment.entity'; // 👈 NEW IMPORT
 import { StudentResponse } from './entities/student-response.entity';
 import { StudentScore } from './entities/student-score.entity';
 
@@ -33,6 +34,7 @@ async function seed() {
     const questionRepo = dataSource.getRepository(Question);
     const optionRepo = dataSource.getRepository(Option);
     const childRepo = dataSource.getRepository(Child);
+    const assessmentRepo = dataSource.getRepository(Assessment); // 👈 NEW REPO
 
     console.log('🌱 Building Fresh Data...');
 
@@ -41,7 +43,16 @@ async function seed() {
     await childRepo.save(child);
     console.log('   ✅ Created Child');
 
-    // --- 2. Define Clean Data ---
+    // --- 2. Create the Master Assessment (The "Test Paper") ---
+    // 👇 THIS IS THE NEW PART
+    const mainAssessment = assessmentRepo.create({
+      title: "Multiple Intelligence Assessment Level 1",
+      description: "Standard test for students aged 10-15"
+    });
+    await assessmentRepo.save(mainAssessment);
+    console.log('   ✅ Created Assessment: "Level 1"');
+
+    // --- 3. Define Clean Data ---
     const allData = [
       { type: 'Logical-Mathematical', questions: ['I enjoy solving puzzles.', 'Math is fun for me.'] },
       { type: 'Musical', questions: ['I remember tunes easily.', 'I like singing.'] },
@@ -61,13 +72,17 @@ async function seed() {
       { text: 'Very Negative', weight: -5 },
     ];
 
-    // --- 3. Insert Data ---
+    // --- 4. Insert Data (Questions linked to Assessment) ---
     for (const group of allData) {
       let intel = intelRepo.create({ name: group.type });
       await intelRepo.save(intel);
 
       for (const qText of group.questions) {
-        const question = questionRepo.create({ text: qText, intelligence: intel });
+        const question = questionRepo.create({ 
+            text: qText, 
+            intelligence: intel,
+            assessment: mainAssessment // 👈 LINK QUESTION TO ASSESSMENT
+        });
         await questionRepo.save(question);
 
         for (const opt of optionsData) {

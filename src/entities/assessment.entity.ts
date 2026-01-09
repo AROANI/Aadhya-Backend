@@ -1,20 +1,22 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Child } from './child.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
+import { Question } from './question.entity';
+import { Child } from './child.entity'; // 👈 Import Child
 
-@Entity({ name: 'assessments' })
+@Entity()
 export class Assessment {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  category: string;
+  title: string;
 
-  @Column()
-  respondent: string;
+  @Column({ nullable: true })
+  description: string;
 
-  @Column({ type: 'json' })
-  answers: Record<string, any>;
-
-  @ManyToOne(() => Child, (child) => child.assessments)
+  // 👇 NEW: This fixes the "Property child does not exist" error
+  @ManyToOne(() => Child, (child) => child.assessments, { nullable: true })
   child: Child;
+
+  @OneToMany(() => Question, (question) => question.assessment)
+  questions: Question[];
 }

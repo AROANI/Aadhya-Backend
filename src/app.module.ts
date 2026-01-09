@@ -6,6 +6,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_FILTER } from '@nestjs/core';
 import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
 
+// Entities
+import { Assessment } from './entities/assessment.entity'; // 👈 NEW IMPORT
+
 // Modules
 import { ChildModule } from './child/child.module';
 import { NgoModule } from './ngo/ngo.module';
@@ -28,6 +31,7 @@ import { ResponsesModule } from './responses/responses.module';
       database: 'aadhya',
       autoLoadEntities: true,
       synchronize: true,
+      entities: [Assessment], // 👈 Explicitly added to ensure table creation
     }),
     ChildModule,
     NgoModule,

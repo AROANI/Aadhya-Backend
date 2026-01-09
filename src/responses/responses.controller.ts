@@ -6,22 +6,25 @@ import { CreateResponseDto } from './dto/create-response.dto';
 export class ResponsesController {
   constructor(private readonly responsesService: ResponsesService) {}
 
+  // ✅ 1. Get User (This was in your logs)
   @Get('user')
   getStudent() {
     return this.responsesService.getStudent();
   }
 
+  // ✅ 2. Get Random Question (MISSING in your logs)
   @Get('question')
   getQuestion() {
     return this.responsesService.getQuestion();
   }
 
-  // 📊 THIS IS THE NEW PART FOR THE CHART
+  // ✅ 3. Get Scores for Chart (MISSING in your logs)
   @Get('score/:childId')
   getScores(@Param('childId') childId: string) {
     return this.responsesService.getScores(childId);
   }
 
+  // ✅ 4. Submit Answer (MISSING in your logs)
   @Post()
   create(@Body() createResponseDto: CreateResponseDto) {
     return this.responsesService.create(createResponseDto);
